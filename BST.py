@@ -12,10 +12,10 @@ class Node():
         self.left = left
         self.right = right
         self.parent= parent
-        
+
     def __str__(self):
         return self.value.__str__()
-    
+
 #BST 클래스 초기화 None
 class BST:
     def __init__(self):
@@ -30,7 +30,7 @@ class BST:
                 print_tree(root.left)
                 print(str(root.value),end=' ')
                 print_tree(root.right)
-                
+
         return print_tree(self.root)
 
     def __str__(self):
@@ -38,14 +38,14 @@ class BST:
         self._print_tree()
         print("]",end='')
         return "\n"
-    
+
     #검색.. 크기비교에따라 좌우로 서칭
     def search(self,target,tree):
         if tree == None: return None
-        
+
         if tree.value == target:
             return tree
-        
+
         if tree.value < target:
             return self.search(target, tree.right)
         else:
@@ -75,13 +75,13 @@ class BST:
                 node.parent = tree
             else:
                 self.insert(value, tree.left)
-                
+
     def remove(self, target, node):
-        
+
         if node == None:
             return None
 
-        
+
         #타깃 서칭...
         if node.value < target:
             self.remove(target,node.right)
@@ -89,7 +89,7 @@ class BST:
             self.remove(target,node.left)
         #목표물을 찾은 경우
         else:
-            
+
             #마지막 노드의 경우
             if node.left == None and node.right == None:
                 if node.parent.left == node:
@@ -108,7 +108,16 @@ class BST:
                 node.value = tmp
             #child가 하나인 경우
             else:
-                
+                if node == self.root:
+                    if node.right != None:
+                        self.root = node.right
+                        del node
+                        return
+                    else:
+                        self.root = node.left
+                        del node
+                        return
+
                 tmp = Node(None)
                 if node.left != None:
                     tmp = node.left
@@ -117,21 +126,15 @@ class BST:
                     tmp = node.right
                     del node.right
                 #skewd된 경우 try ~ except로 임시방편으로 처리함..
-                try:
-                    if node.parent.left == node:
-                        node.parent.left = tmp
-                        
-                    else:
-                        node.parent.right = tmp
-                # skewed 된  root 노드 제거
-                except:
-                    if node.right != None:
-                        self.root = node.right
-                        del node
-                    else:
-                        self.root = node.left
-                        del node
-                        
+
+                if node.parent.left == node:
+                    node.parent.left = tmp
+
+                else:
+                    node.parent.right = tmp
+            # skewed 된  root 노드 제거
+
+
     def search_min(self,tree):
         while True:
             if tree.left == None:
@@ -141,12 +144,12 @@ class BST:
 
 
 if __name__ == '__main__':
-   
+
     items = [4, 2, 3, 1, 6, 5, 7]
     #items = [4, 27]
     #items = [5,4,3,2,1]
     mytree = BST()
-    
+
     for x in items:
         mytree.insert(x,mytree.root)
     print(mytree)
@@ -155,29 +158,31 @@ if __name__ == '__main__':
     print(mytree)
     print(mytree.root)
 
-    
-    
-    
+
+
+
     items = [3,5,1,7,4,8,9,2]
-    
+    items = [1,2,3,4,4,5]
+    items = [5,4,3,2,1]
+
     mytree = BST()
-    
+
     for x in items:
         mytree.insert(x, mytree.root)
-    
-    print(mytree)
-    
-    found = mytree.search(100,mytree.root)
-    print('100 Found? -->',found)
-    
-    found = mytree.search(4,mytree.root)
-    print('100 Found? -->', found)
-    
+
     print(mytree)
 
-    mytree.remove(8, mytree.root)
-    mytree.remove(1, mytree.root)
-    mytree.remove(3, mytree.root)
-    print("Deleted 1,3,8..")
+    found = mytree.search(100,mytree.root)
+    print('100 Found? -->',found)
+
+    found = mytree.search(4,mytree.root)
+    print('4 Found? -->', found)
+
     print(mytree)
-    
+
+    #mytree.remove(8, mytree.root)
+    #mytree.remove(1, mytree.root)
+    #mytree.remove(3, mytree.root)
+    mytree.remove(5, mytree.root)
+    #print("Deleted 1,3,8..")
+    print(mytree)
