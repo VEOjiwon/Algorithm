@@ -163,7 +163,7 @@ if __name__ == '__main__':
 
     items = [3,5,1,7,4,8,9,2]
     items = [1,2,3,4,4,5]
-    items = [5,4,3,2,1]
+    items = [1,4,3,2]
 
     mytree = BST()
 
@@ -183,6 +183,6 @@ if __name__ == '__main__':
     #mytree.remove(8, mytree.root)
     #mytree.remove(1, mytree.root)
     #mytree.remove(3, mytree.root)
-    mytree.remove(5, mytree.root)
+    mytree.remove(4, mytree.root)
     #print("Deleted 1,3,8..")
     print(mytree)
